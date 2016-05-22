@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$/server/server.js" libraries="{node-DefinitelyTyped}" />
+    <file url="file://$PROJECT_DIR$/server/static/js.js" libraries="{ECMAScript 6}" />
+    <includedPredefinedLibrary name="ECMAScript 6" />
+  </component>
+</project>

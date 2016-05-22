@@ -1,0 +1,18 @@
+{
+  "name": "paint_game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "socket.io"
+  ],
+  "dependencies": {
+    "socket.io": "^1.0"
+  },
+  "author": "moyu",
+  "license": "ISC"
+}
