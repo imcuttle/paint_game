@@ -156,7 +156,7 @@ io.sockets.on('connection',function (socket) {
                     o = JSON.stringify(o);
                     t.emit('update my time',o);
                     t.broadcast.emit('update time',o);
-                    setTimeout(arguments.callee,1000);
+                    Game.timer = setTimeout(arguments.callee,1000);
                 },1000);
             },3000);
         });
@@ -190,11 +190,12 @@ io.sockets.on('connection',function (socket) {
             }
         });
         this.on('disconnect',function () {
-            if(Game.player && this.id === Game.player.id && Game.timer) {
+            if(Game.player && this.id === Game.player.id) {
                 delete Game.player;
                 paths=[];
                 Game.inQueue.shift();
-                clearTimeout(Game.timer);
+                if(Game.timer!=null)
+                    clearTimeout(Game.timer);
             }
             this.broadcast.emit('server msg','拜, '+this.name +'。');
             this.broadcast.emit('othertime',JSON.stringify({name:this.name+'(已退出)',time:this.time}));
