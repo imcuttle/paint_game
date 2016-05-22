@@ -150,7 +150,7 @@ io.sockets.on('connection',function (socket) {
                         return;
                     }
                     t.time--;var o = {name:t.name,time:t.time,word:t.word.word.length+'个字'};
-                    if(t.time <= 20) {
+                    if(t.time <= 25) {
                         o.word = o.word +',' + t.word.tip;
                     }
                     o = JSON.stringify(o);
@@ -172,8 +172,16 @@ io.sockets.on('connection',function (socket) {
             if(!doCmd(msg,this)) {
                 msg = escapeHTML(msg);
                 if(Game.player && Game.player.word.word === msg){
+                    if(this.prev && this.prev.player === Game.player&& this.prev.word === msg){
+                        this.emit('server msg',"您已经正确回答过了！");
+                        return;
+                    }
                     this.emit('server msg',"真棒！回答正确！");
                     this.broadcast.emit('server msg',"恭喜！"+this.name+" 回答正确！");
+                    this.prev = {
+                        player:Game.player,
+                        word:msg
+                    };
                     return;
                 }
                 var date = new Date().format('yyyy-MM-dd hh:mm:ss');

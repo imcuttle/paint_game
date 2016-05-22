@@ -102,7 +102,7 @@ socket.on('timeout',function (d) {
     var t = users.querySelector('#p'+d.id);
     if(t) t.outerHTML='';
     info.time.innerText = '时间到了！';
-    info.word = '正确答案为：'+d.word;
+    info.word.innerText = '正确答案为：'+d.word;
 });
 socket.on('clear paint',function () {
     ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
