@@ -94,6 +94,8 @@ socket.on('mytimeout',function (id) {
     info.time.innerText = '时间到了！';
     canvas.isMe = false;
     btnIn.disabled = false;
+    btnIn.in = false;
+    btnIn.innerText = '上场！';
 });
 socket.on('timeout',function (d) {
     d = JSON.parse(d);

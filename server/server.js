@@ -139,6 +139,7 @@ io.sockets.on('connection',function (socket) {
                     if(t.time === 0){
                         delete t.time;
                         delete Game.player;
+                        delete t.attrin;
                         paths=[];
                         Game.inQueue.shift();
                         setTimeout(run,3000);
