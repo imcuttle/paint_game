@@ -1,8 +1,8 @@
 # Paint Game
 
 
-    npm install
+        npm install
 
-    node server/server.js
+        node server/server.js
 
-    http://localhost/
+        http://localhost/
