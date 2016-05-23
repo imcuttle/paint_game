@@ -53,24 +53,24 @@ function doCmd(msg,socket) {
             case 'show paths':
                 socket.emit('cmd',JSON.stringify(paths));
                 socket.emit('server msg','指令操作成功！');
-                break;
+                return true;
             case 'show users':
                 socket.emit('cmd',JSON.stringify(sockets.map(x=>x=x.name)));
                 socket.emit('server msg','指令操作成功！');
-                break;
+                return true;
             case 'clear paths':
                 paths = [];
                 socket.emit('server msg','指令操作成功！');
                 socket.emit('paint paths',JSON.stringify(paths));
-                break;
+                return true;
             case 'show word':
                 socket.emit('server msg','指令操作成功！');
                 socket.emit('cmd',JSON.stringify(Game.player?Game.player.word:null));
-                break;
+                return true;
             case 'show words':
                 socket.emit('server msg','指令操作成功！');
                 socket.emit('cmd',JSON.stringify(db._db));
-                break;
+                return true;
         }
         if(msg.startsWith('add word')){
             var s = msg.substring(8).trim();
