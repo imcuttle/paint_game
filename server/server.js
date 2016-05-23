@@ -21,14 +21,28 @@ function handler(req,res) {
 }
 
 var db = (function () {
-    var db = JSON.parse(fs.readFileSync(__dirname+'/db.json'));
+    var file = __dirname+'/db.json';
+    var db = JSON.parse(fs.readFileSync(file));
+
     return {
+        save : function () {
+            fs.writeFile(file,JSON.stringify(db,null,4));
+        },
+        add : function (word,tip) {
+            if(db.findIndex(x=>{return x.word===word;})!=-1){
+                console.error(new Error(word+' existed'));
+                return false;
+            }
+            db.push({word:word,tip:tip});
+            return true;
+        },
         randomWord :function () {
             return db[Math.floor(Math.random()*db.length)];
         },
         _db:db
     }
 })();
+
 
 var paths = [];
 function doCmd(msg,socket) {
@@ -57,7 +71,21 @@ function doCmd(msg,socket) {
                 socket.emit('server msg','指令操作成功！');
                 socket.emit('cmd',JSON.stringify(db._db));
                 break;
-            default: return false;
+        }
+        if(msg.startsWith('add word')){
+            var s = msg.substring(8).trim();
+            s = s.split(' ');
+            if(s.length===2){
+                if(db.add(s[0],s[1])) {
+                    db.save();
+                    socket.emit('server msg', '指令操作成功！');
+                }
+                else
+                    socket.emit('server msg','指令操作失败。');
+            }else
+                socket.emit('server msg','指令操作失败！');
+        }else{
+            return false;
         }
         return true;
     }else{
@@ -80,9 +108,8 @@ function escapeHTML(data) {
                 d = '&gt;'; break;
             case ' ':
                 d = '&nbsp;'; break;
-            default:
-                s+=d;
         }
+        s+=d;
     }
     return s;
 }
