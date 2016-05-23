@@ -225,7 +225,8 @@ io.sockets.on('connection',function (socket) {
                     clearTimeout(Game.timer);
             }
             this.broadcast.emit('server msg','拜, '+this.name +'。');
-            this.broadcast.emit('othertime',JSON.stringify({name:this.name+'(已退出)',time:this.time}));
+            this.broadcast.emit('othertime',JSON.stringify({name:this.name+'(已退出)',time:0}));
+            this.broadcast.emit('out user',this.id.substring(2));
         });
         this.on('paint',function (data) {
             if(!Game.player || Game.player.id !== this.id) return;
