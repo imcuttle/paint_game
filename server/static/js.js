@@ -11,7 +11,11 @@ var canvas = document.getElementsByTagName('canvas')[0],
 var input = document.getElementById('input-msg'),
     users = document.getElementById('div-users'),
     btnIn = document.getElementById('btn-in'),
-    info = document.getElementById('info');
+    info = document.getElementById('info'),
+    tops = document.getElementById('tops');
+
+tops.template = tops.querySelector('[role=template]').cloneNode(true);
+
 info.time = info.querySelector('#time')
 info.player = info.querySelector('#player')
 info.word = info.querySelector('#word')

@@ -39,7 +39,6 @@
                 <div id="msg">
                 </div>
                 <input type="text" id="input-msg" placeholder="enter to send"/>
-
             </div>
         </div>
     </main>
@@ -47,7 +46,7 @@
     <main class="container">
         <div class="row">
             <div class="col-2 box-sh">
-                <h3 >上场玩家</h3>
+                <h4>上场玩家</h4>
                 <div id="div-users" style="min-height:50px;max-height: 120px;overflow-y: scroll;">
 
                 </div>
@@ -56,12 +55,18 @@
                 </p>
             </div>
             <div class="col-3 box-sh">
-                <h3>信息栏</h3>
+                <h4>信息栏</h4>
                 <div id="info" style="padding: 10px;">
-                    <p><label>绘图玩家：</label><span id="player"></span></p>
-                    <p><label>剩余时间：</label><span id="time"></span></p>
-                    <p><label>关键词语：</label><span id="word"></span></p>
+                    <p><label>绘图玩家：</label><strong id="player"></strong></p>
+                    <p><label>剩余时间：</label><strong id="time"></strong></p>
+                    <p><label>关键词语：</label><strong id="word"></strong></p>
                 </div>
+            </div>
+            <div class="col-3 box-sh">
+                <h4>排行榜</h4>
+                <ul id="tops" style="margin-left: 20px;line-height: 24px;">
+                    <li style="white-space: nowrap;" role="template"><label style="margin-right: 40px;"></label><strong style="margin-right: 20px;"></strong><em style="margin-right: 20px;padding-right: 10px;" class="fr"></em></li>
+                </ul>
             </div>
         </div>
     </main>

@@ -43,8 +43,46 @@ var db = (function () {
     }
 })();
 
-
 var paths = [];
+var tops = (function () {
+    var _tops = [],idmap={},n=10;
+    return {
+        set : function (id,name,v) {
+            if(this.isExists(id))
+                this.remove(id);
+            var i = _tops.findIndex(x=>{return idmap[x].v<v;});
+            i= i===-1 ? _tops.length : i;
+            _tops.splice(i,0,id);
+            idmap[id] = {name:name,v:v};
+        },
+        isExists : function (id) {
+            return idmap[id]!=null;
+        },
+        remove : function (id) {
+            var i = _tops.indexOf(id);
+            if(i!==-1) {
+                _tops.splice(i, 1);
+                delete idmap[id];
+                return true;
+            }
+            return false;
+        },
+        get:function (id) {
+            return idmap[id];
+        },
+        toJSON:function () {
+            var arr = [];
+            _tops.every((x,i)=>{
+                if(i>=n) return false;
+                arr.push({id:x,v:idmap[x].v,name:idmap[x].name});
+                return true;
+            });
+            return arr;
+        }
+    }
+}());
+
+
 function doCmd(msg,socket) {
     if(msg[0]==='#'){
         var msg = msg.substring(1),
@@ -143,9 +181,12 @@ io.sockets.on('connection',function (socket) {
         this.broadcast.emit('server msg','欢迎, '+this.name+' !');
         this.emit('paint paths',JSON.stringify(paths));
         var users = Game.inQueue.map(x=>{return getSocket(x)});
-        console.log(users);
         this.emit('reset in users',JSON.stringify(users));
 
+        tops.set(this.id.substring(2),this.name,0);
+        var j = JSON.stringify(tops);
+        this.emit('tops',j);
+        this.broadcast.emit('tops',j);
         this.on('in',function () {
             if(this.attrin) return;
             this.attrin = Date.now();
@@ -203,8 +244,12 @@ io.sockets.on('connection',function (socket) {
                         this.emit('server msg',"您已经正确回答过了！");
                         return;
                     }
+                    tops.set(this.id.substring(2),this.name,tops.get(this.id.substring(2)).v+1);
                     this.emit('server msg',"真棒！回答正确！");
                     this.broadcast.emit('server msg',"恭喜！"+this.name+" 回答正确！");
+                    var j = JSON.stringify(tops);
+                    this.broadcast.emit('tops',j);
+                    this.emit('tops',j);
                     this.prev = {
                         player:Game.player,
                         word:msg
@@ -224,9 +269,12 @@ io.sockets.on('connection',function (socket) {
                 if(Game.timer!=null)
                     clearTimeout(Game.timer);
             }
+            if(tops.isExists(this.id.substring(2)))
+                tops.remove(this.id.substring(2));
             this.broadcast.emit('server msg','拜, '+this.name +'。');
             this.broadcast.emit('othertime',JSON.stringify({name:this.name+'(已退出)',time:0}));
             this.broadcast.emit('out user',this.id.substring(2));
+            this.broadcast.emit('tops',JSON.stringify(tops));
         });
         this.on('paint',function (data) {
             if(!Game.player || Game.player.id !== this.id) return;

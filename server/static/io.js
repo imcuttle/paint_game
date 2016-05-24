@@ -106,6 +106,21 @@ socket.on('timeout',function (d) {
 });
 socket.on('clear paint',function () {
     ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+});
+socket.on('tops',function (d) {
+    d = JSON.parse(d);
+    tops.innerHTML = '';
+    var temp = tops.template;
+    d.forEach((x,i)=>{
+        temp.id = x.id;
+        temp.children[0].innerText = 'No'+(i+1);
+        temp.children[1].innerText = x.name;
+        temp.children[2].innerText = x.v+'次';
+
+        var node = tops.template.cloneNode(true);
+        node.removeAttribute('role');
+        tops.appendChild(node);
+    });
 })
 utils = {
     makeUserP : function (x) {

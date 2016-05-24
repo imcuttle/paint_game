@@ -9,9 +9,13 @@ body{
 canvas{
     cursor: crosshair;
 }
-h1,h2,h3,h4,h5,h6{
+h1,h2,h3{
     text-align: center;
     margin: 10px 4px 20px;
+}
+h4,h5,h6{
+    text-align: center;
+    margin: 8px 0 8px;
 }
 .container{
     width: 100%;
@@ -139,4 +143,12 @@ input[type=text]{
 }
 button[disabled]{
     cursor: not-allowed;
+}
+#tops{
+    min-height: 120px;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+*[role=template]{
+    display: none;
 }
