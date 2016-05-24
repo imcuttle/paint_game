@@ -197,7 +197,8 @@ io.sockets.on('connection',function (socket) {
 
             setTimeout(function () {
                 if(Game.player || !Game.inQueue.length) return;
-                var run = arguments.callee,t=Game.inQueue[0];
+                Game.run = arguments.callee
+                var t=Game.inQueue[0];
                 Game.player = t;
                 t.time = 50;t.word = db.randomWord();
                 t.emit('mytime',JSON.stringify({name:t.name,word:t.word.word,time:t.time}));
@@ -210,7 +211,7 @@ io.sockets.on('connection',function (socket) {
                         delete t.attrin;
                         paths=[];
                         Game.inQueue.shift();
-                        setTimeout(run,3000);
+                        setTimeout(Game.run,3000);
                         t.emit('mytimeout',t.id.substring(2));
                         t.broadcast.emit('timeout',JSON.stringify({id:t.id.substring(2),word:t.word.word}));
                         t.emit('clear paint');
@@ -266,8 +267,10 @@ io.sockets.on('connection',function (socket) {
                 delete Game.player;
                 paths=[];
                 Game.inQueue.shift();
-                if(Game.timer!=null)
+                if(Game.timer!=null) {
                     clearTimeout(Game.timer);
+                    setTimeout(Game.run,3000);
+                }
             }
             if(tops.isExists(this.id.substring(2)))
                 tops.remove(this.id.substring(2));
