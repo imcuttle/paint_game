@@ -45,7 +45,6 @@ window.onload = function () {
             }
             socket.emit('client msg',this.value);
             this.value = '';
-            msg.scrollTop = msg.scrollHeight;
         }
     }
 }

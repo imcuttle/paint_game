@@ -6,6 +6,7 @@ socket.on('server msg',function (data) {
     var ele = document.createElement('p');
     ele.innerHTML = data;
     msg.appendChild(ele);
+    msg.scrollTop = msg.scrollHeight;
 })
 socket.on('login',function () {
     socket.emit('login',prompt('输入你的姓名'));
