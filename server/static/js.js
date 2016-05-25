@@ -47,28 +47,54 @@ window.onload = function () {
             this.value = '';
         }
     }
+    document.querySelector('#btns').addEventListener('click',function (e) {
+        if(e.target.classList.contains('btn-active-able')){
+            if(this.prevBtn){
+                this.prevBtn.classList.remove('active')
+            }
+            e.target.classList.add('active')
+            this.prevBtn = e.target;
+        }
+    },true);
 }
 
 canvas.addEventListener('mousemove',function (e) {
-    if(e.buttons === 1 && canvas.isMe) {
+    var w=20,h=20;
+    if(canvas.isMe){
         var x = e.offsetX, y = e.offsetY;
-        Ctl.addPos(x,y);
-        Ctl.drawPts(ctx, this.pts);
-        socket.emit('paint',JSON.stringify({data:new Path(this.pts),status:'ing'}))
+        if(e.buttons === 1) {
+            if(!this.erase){
+                Ctl.addPos(x,y);
+                Ctl.drawPts(ctx, this.pts);
+                socket.emit('paint',JSON.stringify({data:new Path(this.pts),status:'ing'}))
+            }else{
+                var rect = new Rect(x-(w>>>1),y-(h>>>1),w,h);
+                rect.clearOn(ctx);
+                socket.emit('erase',rect.x,rect.y,rect.w,rect.h);
+            }
+        }
     }
 });
 
 canvas.addEventListener('mouseup',function (e) {
-    if(!canvas.isMe) return;
+    if(!canvas.isMe || this.erase) return;
     var x = e.offsetX,y = e.offsetY;
     Ctl.addPos(x,y);
     Ctl.addPath(this.pts);
-    socket.emit('paint',JSON.stringify({data:new Path(this.pts),status:'end'}))
+    socket.emit('paint',JSON.stringify({data:new Path(this.pts),status:'end'}));
     Ctl.clearPos();
+
 })
 
 canvas.addEventListener('mousedown',function (e) {
-    if(!canvas.isMe) return;
+    if(!this.isMe) return;
+    if(this.erase){
+        var w=20,h=20;
+        var rect = new Rect(x-(w>>>1),y-(h>>>1),w,h);
+        rect.clearOn(ctx);
+        socket.emit('erase',rect.x,rect.y,rect.w,rect.h);
+        return;
+    }
     var x = e.offsetX,y = e.offsetY;
     Ctl.clearPos();
     Ctl.addPos(x,y);
@@ -175,3 +201,11 @@ function Path(pts,lw,color) {
     this.color = color || canvas.color;
 }
 
+function Rect(x,y,w,h) {
+    this.x=x;this.y=y;this.w=w;this.h=h;
+}
+
+
+Rect.prototype.clearOn = function (ctx) {
+    ctx.clearRect(this.x,this.y,this.w,this.h);
+}

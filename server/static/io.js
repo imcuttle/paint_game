@@ -15,12 +15,15 @@ socket.on('login',function () {
     canvas.isMe = false;
     btnIn.disabled = false;
 });
-socket.on('paint paths',function (paths) {
-    paths = JSON.parse(paths)
+socket.on('paint paths',function (paths,erases) {
+    paths = JSON.parse(paths);
+    erases = JSON.parse(erases);
     if(!paths || !paths.length) return;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     for(var k in paths)
         Ctl.drawPts(ctx, paths[k]);
+    for(var k in erases)
+        new Rect(erases[k].x,erases[k].y,erases[k].w,erases[k].h).clearOn(ctx);
 })
 socket.on('paint pts',function (pts) {
     //canvas.paths = paths;
@@ -42,6 +45,9 @@ socket.on('reset in users',function (data) {
     data.forEach(x=>{
         users.appendChild(utils.makeUserP(x));
     });
+})
+socket.on('erase',function (x,y,w,h) {
+    new Rect(x,y,w,h).clearOn(ctx);
 })
 socket.on('new in user',function (data) {
     users.appendChild(utils.makeUserP(JSON.parse(data)));
