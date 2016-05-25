@@ -9,7 +9,10 @@ socket.on('server msg',function (data) {
     msg.scrollTop = msg.scrollHeight;
 })
 socket.on('login',function () {
-    socket.emit('login',prompt('输入你的姓名'));
+    if(prompt)
+        socket.emit('login',prompt('输入你的姓名'));
+    else
+        socket.emit('login','手机用户');
     btnIn.in = false;
     btnIn.innerText='上场！';
     canvas.isMe = false;
