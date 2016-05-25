@@ -81,7 +81,7 @@ var tops = (function () {
         }
     }
 }());
-erases = [];
+
 
 function doCmd(msg,socket) {
     if(msg[0]==='#'){
@@ -98,9 +98,8 @@ function doCmd(msg,socket) {
                 return true;
             case 'clear paths':
                 paths = [];
-                erases = [];
                 socket.emit('server msg','指令操作成功！');
-                socket.emit('paint paths',JSON.stringify(paths),JSON.stringify(erases));
+                socket.emit('paint paths',JSON.stringify(paths));
                 return true;
             case 'show word':
                 socket.emit('server msg','指令操作成功！');
@@ -180,7 +179,7 @@ io.sockets.on('connection',function (socket) {
         this.attrin = false;
         this.emit('server msg','欢迎, '+this.name+' !');
         this.broadcast.emit('server msg','欢迎, '+this.name+' !');
-        this.emit('paint paths',JSON.stringify(paths),JSON.stringify(erases));
+        this.emit('paint paths',JSON.stringify(paths));
         var users = Game.inQueue.map(x=>{return getSocket(x)});
         this.emit('reset in users',JSON.stringify(users));
 
@@ -201,7 +200,7 @@ io.sockets.on('connection',function (socket) {
                 Game.run = arguments.callee
                 var t=Game.inQueue[0];
                 Game.player = t;
-                t.time = 50;t.word = db.randomWord();
+                t.time = 60;t.word = db.randomWord();
                 t.emit('mytime',JSON.stringify({name:t.name,word:t.word.word,time:t.time}));
                 t.broadcast.emit('othertime',JSON.stringify({name:t.name,time:t.time}));
                 Game.timer = setTimeout(function () {
@@ -211,7 +210,6 @@ io.sockets.on('connection',function (socket) {
                         delete Game.player;
                         delete t.attrin;
                         paths=[];
-                        erases = [];
                         Game.inQueue.shift();
                         setTimeout(Game.run,4000);
                         t.emit('mytimeout',t.id.substring(2));
@@ -221,7 +219,7 @@ io.sockets.on('connection',function (socket) {
                         return;
                     }
                     t.time--;var o = {name:t.name,time:t.time,word:t.word.word.length+'个字'};
-                    if(t.time <= 25) {
+                    if(t.time <= 30) {
                         o.word = o.word +',' + t.word.tip;
                     }
                     o = JSON.stringify(o);
@@ -232,7 +230,7 @@ io.sockets.on('connection',function (socket) {
             },4000);
         });
         this.on('erase',function (x,y,w,h) {
-            erases.push({x:x,y:y,w:w,h:h});
+            paths.push({tag:'erase',x:x,y:y,w:w,h:h});
             this.broadcast.emit('erase',x,y,w,h);
         });
         this.on('out',function () {
@@ -272,13 +270,13 @@ io.sockets.on('connection',function (socket) {
             if(Game.player && this.id === Game.player.id) {
                 delete Game.player;
                 paths=[];
-                erases=[];
                 Game.inQueue.shift();
                 if(Game.timer!=null) {
                     clearTimeout(Game.timer);
                     setTimeout(Game.run,4000);
                 }
                 this.broadcast.emit('othertime',JSON.stringify({name:this.name+'(已退出)',time:0}));
+                this.broadcast.emit('clear paint');
             }
             if(tops.isExists(this.id.substring(2)))
                 tops.remove(this.id.substring(2));
@@ -288,7 +286,6 @@ io.sockets.on('connection',function (socket) {
             this.broadcast.emit('server msg','拜, '+this.name +'。');
             this.broadcast.emit('out user',this.id.substring(2));
             this.broadcast.emit('tops',JSON.stringify(tops));
-            this.broadcast.emit('clear paint');
         });
         this.on('paint',function (data) {
             if(!Game.player || Game.player.id !== this.id) return;
@@ -300,12 +297,13 @@ io.sockets.on('connection',function (socket) {
                     break;
                 case 'end' :
                     this.broadcast.emit('paint pts',JSON.stringify(pts));
+                    pts.tag = 'pts';
                     paths.push(pts);
                     break;
             }
         });
         this.on('repaint',function () {
-            this.emit('paint paths',JSON.stringify(paths),JSON.stringify(erases));
+            this.emit('paint paths',JSON.stringify(paths));
         })
     });
     socket.emit('login');
