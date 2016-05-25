@@ -305,6 +305,14 @@ io.sockets.on('connection',function (socket) {
         this.on('repaint',function () {
             this.emit('paint paths',JSON.stringify(paths));
         })
+        this.on('clear paths',function () {
+            if(this === Game.player) {
+                console.log('clear all');
+                paths = [];
+                this.emit('clear paint');
+                this.broadcast.emit('clear paint');
+            }
+        })
     });
     socket.emit('login');
 })
