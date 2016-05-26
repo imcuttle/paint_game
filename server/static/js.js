@@ -11,15 +11,38 @@ var canvas = document.getElementsByTagName('canvas')[0],
 var input = document.getElementById('input-msg'),
     users = document.getElementById('div-users'),
     btnIn = document.getElementById('btn-in'),
+    btnAutoin = document.getElementById('btn-autoin'),
     info = document.getElementById('info'),
     tops = document.getElementById('tops');
-
+btnIn.inAct = function () {
+    this.innerText='下场';
+    this.in=true;
+};
+btnIn.outAct = function () {
+    this.innerText='上场！';
+    this.in=false;
+    this.disabled = false;
+};
 tops.template = tops.querySelector('[role=template]').cloneNode(true);
 
 info.time = info.querySelector('#time')
 info.player = info.querySelector('#player')
 info.word = info.querySelector('#word')
-
+btnAutoin.addEventListener('click',function (e) {
+    var btnin = btnIn;
+    if(btnin.autoIn == null){
+        // btnin.outAct();
+        if(!btnin.in) socket.emit('in');
+        btnin.autoIn = setInterval(function () {
+            if(canvas.isMe) return;
+            if(!btnin.in) socket.emit('in');
+        },5000);
+    }else{
+        clearInterval(btnin.autoIn);
+        delete btnin.autoIn;
+    }
+    this.classList.toggle('on');
+});
 btnIn.addEventListener('click',function () {
     var t = this.in;
     if(this.t) clearTimeout(this.t);

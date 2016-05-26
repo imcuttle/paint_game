@@ -94,6 +94,11 @@ h4,h5,h6{
     background-color: cornflowerblue;
     color: azure;
 }
+
+.on{
+    border: solid 2px hotpink;
+    opacity: .6;
+}
 a{
     text-decoration: none;
     font-size: 14px;
@@ -148,6 +153,7 @@ input[type=text]{
     width: 90%;
 }
 button[disabled]{
+    opacity: .6;
     cursor: not-allowed;
 }
 #tops{

@@ -13,10 +13,9 @@ socket.on('login',function () {
         socket.emit('login',prompt('输入你的姓名'));
     else
         socket.emit('login','手机用户');
-    btnIn.in = false;
-    btnIn.innerText='上场！';
+    btnIn.outAct();
     canvas.isMe = false;
-    btnIn.disabled = false;
+    btnAutoin.disalbed = false;
 });
 socket.on('paint paths',function (paths) {
     paths = JSON.parse(paths);
@@ -63,15 +62,13 @@ socket.on('out user',function (id) {
 socket.on('in',function (data) {
     users.appendChild(utils.makeUserP(JSON.parse(data)));
     users.scrollTop = users.scrollHeight;
-    btnIn.in = true;
-    btnIn.innerText = '下场';
+    btnIn.inAct();
 });
 socket.on('out',function (id) {
     var x = users.querySelector('#p'+id);
     if(x){
         x.outerHTML='';
-        btnIn.in = false;
-        btnIn.innerText = '上场！';
+        btnIn.outAct();
     }
 });
 
@@ -104,9 +101,7 @@ socket.on('mytimeout',function (id) {
     if(t) t.outerHTML='';
     info.time.innerText = '时间到了！';
     canvas.isMe = false;
-    btnIn.disabled = false;
-    btnIn.in = false;
-    btnIn.innerText = '上场！';
+    btnIn.outAct();
 });
 socket.on('timeout',function (d) {
     d = JSON.parse(d);
