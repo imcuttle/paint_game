@@ -154,7 +154,7 @@ Game.inQueue = [];
 Game.player = null;
 io.sockets.on('connection',function (socket) {
     socket.on('login',function (name) {
-        this.name = name || this.id.substring(2);
+        this.name = name || "无名游客";
         this.attrin = false;
         this.emit('server msg','欢迎, '+this.name+' !');
         this.broadcast.emit('server msg','欢迎, '+this.name+' !');
