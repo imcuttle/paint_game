@@ -13,33 +13,79 @@
     <script defer="defer" src="io.js"></script>
 </head>
 <body>
+<div class="container">111</div>
     <main class="container">
         <h1>Paint Online</h1>
         <div class="row">
             <div style="float: left;width: 100%;">
-                <div style="margin-left:10px;margin-right: 400px;" class="box-sh">
-                <canvas height="600">
-                    Sorry, Your Browser don't support canvas of Html5.
-                </canvas>
-                <div style="background-color: gainsboro">
-                    <div class="ctl-row" id="colors">
-                        <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">Colors</span>
+                <div style="margin-left:10px;margin-right: 400px;">
+                    <div class="box-sh">
+                    <canvas height="600">
+                        Sorry, Your Browser don't support canvas of Html5.
+                    </canvas>
+                    <div style="background-color: gainsboro">
+                        <div class="ctl-row" id="colors">
+                            <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">Colors</span>
 
-                    </div>
-                    <div class="ctl-row">
-                        <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">Width</span>
-                        <input id="ranger" type="range" style="width: 100px;" value="1" min="1" step="1" max="10"/>
-                        <span>1</span>
-                        <div class="fr" id="btns">
-                            <a class="btn btn-blue btn-active-able" href="javascript:delete canvas.erase;">画笔</a>
-                            <a class="btn btn-blue btn-active-able" href="javascript:canvas.erase=true;">橡皮擦</a>
-                            <a class="btn btn-blue" onclick="socket.emit('clear paths');" href="javascript:;">清空</a>
-                            <a class="btn btn-blue" onclick="this.href=canvas.toDataURL();" download="png.png">下载</a>
                         </div>
-                        <div style="clear: both;"></div>
+                        <div class="ctl-row">
+                            <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">Width</span>
+                            <input id="ranger" type="range" style="width: 100px;" value="1" min="1" step="1" max="10"/>
+                            <span>1</span>
+                            <div class="fr" id="btns">
+                                <a class="btn btn-blue btn-active-able" href="javascript:delete canvas.erase;">画笔</a>
+                                <a class="btn btn-blue btn-active-able" href="javascript:canvas.erase=true;">橡皮擦</a>
+                                <a class="btn btn-blue" onclick="socket.emit('clear paths');" href="javascript:;">清空</a>
+                                <a class="btn btn-blue" onclick="this.href=canvas.toDataURL();" download="png.png">下载</a>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
                     </div>
+                    </div>
+                    <main style="margin-top: 20px;">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="box-sh">
+                                <h4>上场玩家</h4>
+                                <div id="div-users" style="min-height:50px;max-height: 120px;overflow-y: scroll;">
+
+                                </div>
+                                <p class="fr" style="margin: 5px;">
+                                    <button class="btn btn-blue" id="btn-in" title="上场后，队列第一位将会上场绘画">上场！</button>
+                                    <button class="btn btn-blue" id="btn-autoin" title="自动上场">自动上场</button>
+                                </p>
+                                <p style="clear: both"></p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="box-sh">
+                                <h4>信息栏</h4>
+                                <div id="info" style="padding: 10px;overflow: scroll">
+                                    <p style="white-space: nowrap;"><label>绘图玩家：</label><strong id="player"></strong></p>
+                                    <p style="white-space: nowrap;"><label>剩余时间：</label><strong id="time"></strong></p>
+                                    <p style="white-space: nowrap;"><label>关键词语：</label><strong id="word"></strong></p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="box-sh">
+                                <h4>排行榜</h4>
+                                <div class="table-responsive">
+                                    <table id="tops">
+                                        <tr role="template">
+                                            <td><label></label></td>
+                                            <td><strong></strong></td>
+                                            <td><em></em></td>
+                                        </tr>
+                                        <!--<li style="white-space: nowrap;" role="template"><label style="margin-right: 40px;"></label><strong style="margin-right: 20px;"></strong><em style="margin-right: 20px;padding-right: 10px;"></em></li>-->
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
                 </div>
-                </div>
+
             </div>
             <div class="box-sh" style="margin-left: -380px;float: left;width:370px;">
                 <h3>Messages</h3>
@@ -50,34 +96,7 @@
         </div>
     </main>
 
-    <main class="container">
-        <div class="row">
-            <div class="col-2 box-sh">
-                <h4>上场玩家</h4>
-                <div id="div-users" style="min-height:50px;max-height: 120px;overflow-y: scroll;">
 
-                </div>
-                <p class="fr" style="margin: 5px;">
-                <button class="btn btn-blue" id="btn-in" title="上场后，队列第一位将会上场绘画">上场！</button>
-                <button class="btn btn-blue" id="btn-autoin" title="自动上场">自动上场</button>
-                </p>
-            </div>
-            <div class="col-3 box-sh">
-                <h4>信息栏</h4>
-                <div id="info" style="padding: 10px;">
-                    <p><label>绘图玩家：</label><strong id="player"></strong></p>
-                    <p><label>剩余时间：</label><strong id="time"></strong></p>
-                    <p><label>关键词语：</label><strong id="word"></strong></p>
-                </div>
-            </div>
-            <div class="col-3 box-sh">
-                <h4>排行榜</h4>
-                <ul id="tops" style="margin-left: 20px;line-height: 24px;">
-                    <li style="white-space: nowrap;" role="template"><label style="margin-right: 40px;"></label><strong style="margin-right: 20px;"></strong><em style="margin-right: 20px;padding-right: 10px;" class="fr"></em></li>
-                </ul>
-            </div>
-        </div>
-    </main>
 
 </body>
 </html>

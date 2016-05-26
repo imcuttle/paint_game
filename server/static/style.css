@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: 微软雅黑Arial, Arial, sans-serif;
+    box-sizing: border-box;
 }
 body{
     touch-action: none;
@@ -15,12 +16,16 @@ h1,h2,h3{
 }
 h4,h5,h6{
     text-align: center;
-    margin: 8px 0 8px;
+    padding: 8px 0 8px;
+    border-bottom: 1px solid #eee;
 }
 .container{
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    /*width: 100%;*/
+    /*margin: 20px auto auto;*/
 }
 .margin-none{
     margin: 0;
@@ -29,39 +34,52 @@ h4,h5,h6{
 .col-7{
     width: 65%;
     float: left;
-    margin-left: 20px;
 }
 .col-3{
-    margin-left: 20px;
     width: 25%;
     float: left;
 }
 .col-1{
-    margin-left: 20px;
-    width: 5%;
+    width: 10%;
     float: left;
 }
 .col-2{
-    margin-left: 20px;
-    width: 15%;
+    width: 20%;
+    float: left;
+}
+.col-3{
+
+    width: 30%;
+    float: left;
+}
+.col-4{
+    width: 40%;
     float: left;
 }
 .col-9{
-    margin-left: 20px;
-    width: 85%;
+    width: 90%;
     float: left;
 }
 .col-8{
-    margin-left: 20px;
-    width: 75%;
+    width: 80%;
     float: left;
 }
-
-.row:after{
-    content: '.';
-    height: 0;
-    display: block;
-    visibility: hidden;
+.row{
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.row:before,
+.row:after {
+    content: " ";
+    display: table;
+}
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9{
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.row:after {
     clear: both;
 }
 .text-blue {
@@ -156,10 +174,23 @@ button[disabled]{
     opacity: .6;
     cursor: not-allowed;
 }
-#tops{
-    min-height: 120px;
-    max-height: 150px;
+table{
+    margin-top: 10px;
+    width: 100%;
+    border-collapse:collapse;
+}
+
+table tr:nth-child(2n){
+    background-color: gainsboro;
+}
+.table-responsive{
+    overflow-x: auto;
     overflow-y: scroll;
+    max-height: 150px;
+}
+td{
+    padding: 4px 8px 4px;
+    white-space: nowrap;
 }
 *[role=template]{
     display: none;

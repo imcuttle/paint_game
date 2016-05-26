@@ -119,9 +119,9 @@ socket.on('tops',function (d) {
     var temp = tops.template;
     d.forEach((x,i)=>{
         temp.id = x.id;
-        temp.children[0].innerText = 'No'+(i+1);
-        temp.children[1].innerText = x.name;
-        temp.children[2].innerText = x.v+'次';
+        temp.children[0].firstElementChild.innerText = 'No'+(i+1);
+        temp.children[1].firstElementChild.innerText = x.name;
+        temp.children[2].firstElementChild.innerText = x.v+'次';
 
         var node = tops.template.cloneNode(true);
         node.removeAttribute('role');
