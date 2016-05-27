@@ -14,7 +14,7 @@
 </head>
 <body>
     <main class="container">
-        <h1>Paint Online</h1>
+        <h1>实时「你画我猜」</h1>
         <div class="row">
             <div style="float: left;width: 100%;">
                 <div style="margin-left:10px;margin-right: 400px;">
@@ -24,11 +24,10 @@
                     </canvas>
                     <div style="background-color: gainsboro">
                         <div class="ctl-row" id="colors">
-                            <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">Colors</span>
-
+                            <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">颜色</span>
                         </div>
                         <div class="ctl-row">
-                            <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">Width</span>
+                            <span class="text-blue fl" style="margin: 3px;padding-right: 4px;">线宽</span>
                             <input id="ranger" type="range" style="width: 100px;" value="1" min="1" step="1" max="10"/>
                             <span>1</span>
                             <div class="fr" id="btns">
@@ -87,10 +86,10 @@
 
             </div>
             <div class="box-sh" style="margin-left: -380px;float: left;width:370px;">
-                <h3>Messages</h3>
+                <h3>消息框</h3>
                 <div id="msg">
                 </div>
-                <input type="text" id="input-msg" placeholder="enter to send"/>
+                <input type="text" id="input-msg" placeholder="输入消息或者词语，回车键发送"/>
             </div>
         </div>
     </main>
