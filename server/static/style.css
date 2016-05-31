@@ -24,45 +24,36 @@ h4,h5,h6{
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
-    /*width: 100%;*/
-    /*margin: 20px auto auto;*/
 }
 .margin-none{
     margin: 0;
 }
-
+.col-6{
+    width: 60%;
+}
 .col-7{
-    width: 65%;
-    float: left;
+    width: 70%;
 }
 .col-3{
-    width: 25%;
-    float: left;
+    width: 30%;
 }
 .col-1{
     width: 10%;
-    float: left;
 }
 .col-2{
     width: 20%;
-    float: left;
 }
 .col-3{
-
     width: 30%;
-    float: left;
 }
 .col-4{
     width: 40%;
-    float: left;
 }
 .col-9{
     width: 90%;
-    float: left;
 }
 .col-8{
     width: 80%;
-    float: left;
 }
 .row{
     margin-right: -15px;
@@ -74,10 +65,9 @@ h4,h5,h6{
     display: table;
 }
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9{
-    position: relative;
-    min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
+    float: left;
 }
 .row:after {
     clear: both;

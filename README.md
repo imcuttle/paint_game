@@ -1,6 +1,6 @@
 # Paint Game #
 
-[Demo](http://moyuyc.xyz:4000/)
+[Demo](http://paintgame.moyuyc.xyz/)
 
     npm install
 
