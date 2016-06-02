@@ -113,8 +113,8 @@ a{
 }
 .rect{
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border: 3px solid black;
     text-align: center;
     margin:0 2px 0;
@@ -123,8 +123,8 @@ a{
 .ctl-row{
     border: 1px solid darkgreen;
     background-color: beige;
-    padding-top:3px;
-
+    padding-top:5px;
+    padding-bottom: 5px;
     border-radius: 6px;
     margin: 2px 0 2px;
 }
