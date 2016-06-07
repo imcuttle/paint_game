@@ -1,7 +1,7 @@
 {
   "name": "paint_game",
   "version": "1.0.0",
-  "description": "",
+  "description": "[Demo](http://paintgame.moyuyc.xyz/)",
   "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,13 @@
     "socket.io": "^1.4.6"
   },
   "author": "moyu",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moyuyc/paint_game.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moyuyc/paint_game/issues"
+  },
+  "homepage": "https://github.com/moyuyc/paint_game#readme"
 }
