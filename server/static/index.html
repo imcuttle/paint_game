@@ -31,9 +31,9 @@
                             <input id="ranger" type="range" style="width: 100px;" value="1" min="1" step="1" max="10"/>
                             <span>1</span>
                             <div class="fr" id="btns">
-                                <a class="btn btn-blue btn-active-able" href="javascript:delete canvas.erase;return false;">画笔</a>
-                                <a class="btn btn-blue btn-active-able" href="javascript:canvas.erase=true;return false;">橡皮擦</a>
-                                <a class="btn btn-blue" onclick="socket.emit('clear paths');return false;" href="javascript:;">清空</a>
+                                <a class="btn btn-blue btn-active-able" href="javascript:delete canvas.erase;">画笔</a>
+                                <a class="btn btn-blue btn-active-able" href="javascript:canvas.erase=true;">橡皮擦</a>
+                                <a class="btn btn-blue" onclick="socket.emit('clear paths');" href="javascript:;">清空</a>
                                 <a class="btn btn-blue" onclick="this.href=canvas.toDataURL();" download="png.png">下载</a>
                             </div>
                             <div style="clear: both;"></div>
